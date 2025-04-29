@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Countdown to Celebration</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    #timer {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    #skip {
+      position: absolute;
+      bottom: 30px;
+      font-size: 2rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      color: white;
+      transition: transform 0.3s;
+    }
+
+    #skip:hover {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Birthday Countdown❤️</h1>
+  <div id="timer">Loading...</div>
+  <button id="skip" title="Skip to Celebration">🤗</button>
+
+  <script>
+    const countdownDate = new Date("April 30, 2025 00:00:00").getTime();
+    const timerEl = document.getElementById("timer");
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = countdownDate - now;
+
+      if (distance <= 0) {
+        clearInterval(interval);
+        timerEl.textContent = "🎉 Time to Celebrate!";
+        window.location.href = "celebration.html";
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        timerEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+    }, 1000);
+
+    document.getElementById("skip").addEventListener("click", () => {
+      window.location.href = "celebration.html";
+    });
+  </script>
+
+</body>
+</html>
