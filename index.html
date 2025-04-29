@@ -3,79 +3,292 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Countdown to Celebration</title>
+  <title>🎉 Happy Birthday!</title>
   <style>
     body {
       margin: 0;
-      background-color: black;
-      color: white;
       font-family: 'Poppins', sans-serif;
+      color: #333;
+      overflow-x: hidden;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* Background Slideshow */
+    .slideshow-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background-size: cover;
+      background-position: center;
+      animation: fadeBackground 32s infinite;
+      background-image: url('https://picsum.photos/id/1015/800/600'); /* fallback */
+    }
+
+    @keyframes fadeBackground {
+      0% { background-image: url('https://picsum.photos/id/1015/800/600'); }
+      20% { background-image: url('https://picsum.photos/id/1025/800/600'); }
+      40% { background-image: url('https://picsum.photos/id/1040/800/600'); }
+      60% { background-image: url('https://picsum.photos/id/1050/800/600'); }
+      80% { background-image: url('https://picsum.photos/id/1060/800/600'); }
+      100% { background-image: url('https://picsum.photos/id/1015/800/600'); }
+    }
+
+    .section {
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      flex-direction: column;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: #e52a2a;
+      margin-bottom: 20px;
     }
 
-    #timer {
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-
-    #skip {
-      position: absolute;
-      bottom: 30px;
+    h2 {
       font-size: 2rem;
-      cursor: pointer;
-      background: none;
-      border: none;
-      color: white;
-      transition: transform 0.3s;
+      color: #ff6f61;
+      margin: 10px 0;
     }
 
-    #skip:hover {
-      transform: scale(1.2);
+    .wish-widget {
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      font-size: 1.4rem;
+      color: #333;
+      max-width: 400px;
+      width: 90%;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .wish-widget:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    #muteBtn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      padding: 10px 15px;
+      background: #ff5733;
+      border: none;
+      border-radius: 50%;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+      z-index: 2;
+    }
+
+    #muteBtn:hover {
+      background: #ff3d00;
+    }
+
+    .gallery {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .gallery img {
+      width: 250px;
+      height: 250px;
+      border-radius: 10px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.1);
+    }
+
+    .music {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 30px;
+    }
+
+    .music button {
+      padding: 10px 15px;
+      font-size: 1.2rem;
+      background: #ff6f61;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .music button:hover {
+      background: #ff5733;
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 1.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Responsive Typography */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      .wish-widget {
+        font-size: 1rem;
+        padding: 15px;
+      }
+
+      .gallery img {
+        width: 100px;
+        height: 100px;
+      }
+
+      #muteBtn {
+        font-size: 1.5rem;
+        padding: 8px 12px;
+      }
+
+      .music button {
+        font-size: 1rem;
+        padding: 8px 12px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Birthday Countdown❤️</h1>
-  <div id="timer">Loading...</div>
-  <button id="skip" title="Skip to Celebration">🤗</button>
+<!-- Fullscreen Slideshow Background -->
+<div class="slideshow-background"></div>
 
-  <script>
-    const countdownDate = new Date("April 30, 2025 00:00:00").getTime();
-    const timerEl = document.getElementById("timer");
+<!-- Mute Button -->
+<button id="muteBtn" onclick="toggleMusic()">🔊</button>
 
-    const interval = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = countdownDate - now;
+<!-- Wishes Section -->
+<div class="section fade-in">
+  <h1>🎉 Happy Birthday!</h1>
+  <h2>💌 Wishes from Friends</h2>
+  <div id="carousel">
+    <div class="wish-widget">"Have the best day ever!" – Coco 🎉</div>
+    <div class="wish-widget">"Sending hugs and cake!" – Sam 🍰</div>
+  </div>
+</div>
 
-      if (distance <= 0) {
-        clearInterval(interval);
-        timerEl.textContent = "🎉 Time to Celebrate!";
-        window.location.href = "celebration.html";
-      } else {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+<!-- Gallery -->
+<div class="section fade-in">
+  <h2>📸 Memory Lane</h2>
+  <div class="gallery">
+    <img src="https://picsum.photos/250/250?1" alt="memory1">
+    <img src="https://picsum.photos/250/250?2" alt="memory2">
+    <img src="https://picsum.photos/250/250?3" alt="memory3">
+    <img src="https://picsum.photos/250/250?4" alt="memory4">
+    <img src="https://picsum.photos/250/250?1" alt="memory1">
+    <img src="https://picsum.photos/250/250?2" alt="memory2">
+    <img src="https://picsum.photos/250/250?3" alt="memory3">
+    <img src="https://picsum.photos/250/250?4" alt="memory4">
+    <img src="https://picsum.photos/250/250?1" alt="memory1">
+    <img src="https://picsum.photos/250/250?2" alt="memory2">
+    <img src="https://picsum.photos/250/250?3" alt="memory3">
+    <img src="https://picsum.photos/250/250?4" alt="memory4">
+  </div>
+</div>
 
-        timerEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      }
-    }, 1000);
+<!-- Music Controls -->
+<div class="music fade-in">
+  <button onclick="toggleMusic()">Play / Pause Music</button>
+</div>
 
-    document.getElementById("skip").addEventListener("click", () => {
-      window.location.href = "celebration.html";
+<!-- Music File -->
+<audio id="music" autoplay loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  // Confetti
+  let confetti = [];
+  for (let i = 0; i < 300; i++) {
+    confetti.push({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 6 + 4,
+      d: Math.random() * 100 + 10,
+      color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+      tilt: Math.floor(Math.random() * 10) - 10,
+      tiltAngle: 0,
+      tiltAngleIncremental: Math.random() * 0.07 + .05
     });
-  </script>
+  }
+
+  function drawConfetti() {
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    confetti.forEach(c => {
+      ctx.beginPath();
+      ctx.lineWidth = c.r / 2;
+      ctx.strokeStyle = c.color;
+      ctx.moveTo(c.x + c.tilt + c.r / 4, c.y);
+      ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 4);
+      ctx.stroke();
+    });
+
+    updateConfetti();
+  }
+
+  function updateConfetti() {
+    confetti.forEach((c, i) => {
+      c.tiltAngle += c.tiltAngleIncremental;
+      c.y += (Math.cos(c.d) + 3 + c.r / 2) / 2;
+      c.x += Math.sin(c.d);
+      c.tilt = Math.sin(c.tiltAngle - c.r) * 15;
+    });
+  }
+
+  function toggleMusic() {
+    const audio = document.getElementById('music');
+    const btn = document.getElementById('muteBtn');
+    if (audio.paused) {
+      audio.play();
+      btn.textContent = '🔊';
+    } else {
+      audio.pause();
+      btn.textContent = '🔇';
+    }
+  }
+
+  // Confetti animation loop
+  setInterval(() => drawConfetti(), 25);
+</script>
 
 </body>
 </html>
